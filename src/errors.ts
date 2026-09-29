@@ -27,34 +27,39 @@ export function isAncoreError(error: unknown): error is AncoreError {
   if (error instanceof AncoreError) {
     return true;
   }
-  if (isObject(error) && typeof error.status === 'number' && typeof error.code === 'string') {
+  if (
+    isObject(error) &&
+    typeof error.status === 'number' &&
+    typeof error.code === 'string' &&
+    typeof error.message === 'string'
+  ) {
     return true;
   }
   return false;
 }
 
-export function isRateLimitError(error: unknown): boolean {
+export function isRateLimitError(error: unknown): error is AncoreError {
   if (!isAncoreError(error)) {
     return false;
   }
   return error.status === 429 || error.code === 'RATE_LIMIT_EXCEEDED';
 }
 
-export function isInsufficientBalanceError(error: unknown): boolean {
+export function isInsufficientBalanceError(error: unknown): error is AncoreError {
   if (!isAncoreError(error)) {
     return false;
   }
   return error.status === 402 || error.code === 'INSUFFICIENT_BALANCE';
 }
 
-export function isUnauthorizedError(error: unknown): boolean {
+export function isUnauthorizedError(error: unknown): error is AncoreError {
   if (!isAncoreError(error)) {
     return false;
   }
   return error.status === 401 || error.code === 'UNAUTHORIZED';
 }
 
-export function isValidationError(error: unknown): boolean {
+export function isValidationError(error: unknown): error is AncoreError {
   if (!isAncoreError(error)) {
     return false;
   }

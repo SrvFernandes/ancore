@@ -16,6 +16,7 @@ describe('Error Type Guards', () => {
 
     expect(isAncoreError(errInstance)).toBe(true);
     expect(isAncoreError(errPlain)).toBe(true);
+    expect(isAncoreError({ status: 429, code: 'RATE_LIMIT_EXCEEDED' })).toBe(false);
     expect(isAncoreError(notAnError)).toBe(false);
     expect(isAncoreError(null)).toBe(false);
   });
